@@ -1,0 +1,4 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine on
+   RewriteRule (.*)\/(.*)\.(.*)?([\w]+=)? app/webroot/index.php?__class=$1&__method=$2&__type=$3&$4 [QSA,L]
+</IfModule>
