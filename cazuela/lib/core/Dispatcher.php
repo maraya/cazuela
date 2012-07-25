@@ -3,14 +3,24 @@
 class Dispatcher {
 
 	public function dispatch($request, $response) {
-	
 		try {
 			$request->setClass($_REQUEST['__class']);
 			$request->setMethod($_REQUEST['__method']);
 			$response->setType($_REQUEST['__type']);
+			
+			$params = array();
+			foreach($_REQUEST as $parameter => $value) {
+				if (stripos($parameter, '__') === false) {
+					$params[$parameter] = $value;
+				}
+			}
+			
+			$request->setParams($params);
+			
 			$className = $request->getClass();
 			$methodName = $request->getMethod();
 			$type = $response->getType();
+			
 			$response->setContentType($type);
 			
 			if (!in_array($type, array("json", "xml"))) {
@@ -27,11 +37,20 @@ class Dispatcher {
 				throw new CazuelaException("Class ". $className ." doesn't exist", 404);
 			}
 			
+			$className = $request->getClass();
 			$obj = new $className();
 			
 			if (!method_exists($obj, $methodName)) {
 				throw new CazuelaException("Method ". $methodName ." doesn't exist", 404);
 			}
+			
+			print_r($request->getParams());
+			exit;
+			
+			//call_user_func_array('func',$myArgs);
+			
+			//call_user_func_array(array($instance, "MethodName"), $myArgs);
+
 			
 			$response->setData($obj->{$methodName}());
 		
