@@ -1,7 +1,20 @@
 <?php
 
+/**
+ * Dispatcher: A class to handle the client routing
+ * @author maraya
+ *
+ * Version: 0.1 (26 July 2012)
+ */
+ 
 class Dispatcher {
 
+	/**
+	 * Routing method
+	 * @param CazuelaRequest $request
+	 * @param CazuelaResponse $response
+	 * @throws CazuelaException
+	 */
 	public function dispatch($request, $response) {
 		try {
 			$request->setClass($_REQUEST['__class']);

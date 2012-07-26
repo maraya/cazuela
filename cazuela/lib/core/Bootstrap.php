@@ -1,5 +1,11 @@
 <?php
 	
+/**
+ * Bootstrap: File to manage all requires/includes
+ * @author maraya
+ *
+ * Version: 0.1 (26 July 2012)
+ */
 	require(CAZUELA_BASE . "/lib/core/Configure.php");
 	require(CAZUELA_APP_ROOT . "/config/Config.php");
 	require(CAZUELA_BASE . "/lib/core/CazuelaDB.php");
