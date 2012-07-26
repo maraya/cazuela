@@ -44,15 +44,8 @@ class Dispatcher {
 				throw new CazuelaException("Method ". $methodName ." doesn't exist", 404);
 			}
 			
-			print_r($request->getParams());
-			exit;
-			
-			//call_user_func_array('func',$myArgs);
-			
-			//call_user_func_array(array($instance, "MethodName"), $myArgs);
-
-			
-			$response->setData($obj->{$methodName}());
+			$data = call_user_func_array(array($obj, $methodName), $request->getParams());
+			$response->setData($data);
 		
 		} catch (CazuelaException $e) {
 			$response->setMessage($e->getMessage());

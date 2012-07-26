@@ -7,7 +7,7 @@
 	}
 	
 	if (!defined('CAZUELA_APP_ROOT')) {
-		define('CAZUELA_APP_ROOT', '../../app');
+		define('CAZUELA_APP_ROOT', '/var/www/cazuela/app');
 	}
 
 	require(CAZUELA_BASE . "/lib/core/Bootstrap.php");	
