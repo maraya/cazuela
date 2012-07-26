@@ -16,37 +16,49 @@ class Dispatcher {
 			}
 			
 			$request->setParams($params);
+			$response->setContentType($response->getType());
 			
-			$className = $request->getClass();
-			$methodName = $request->getMethod();
-			$type = $response->getType();
-			
-			$response->setContentType($type);
-			
-			if (!in_array($type, array("json", "xml"))) {
-				throw new CazuelaException("Type ". $type . " is invalid", 400);
+			if (!in_array($response->getType(), array("json", "xml"))) {
+				throw new CazuelaException("Type ". $response->getType() . " is invalid", 400);
 			}
 						
-			if (!file_exists(CAZUELA_APP_ROOT ."/class/". $className.".php")) {
-				throw new CazuelaException("Class file ". $className ." not found", 404);
+			if (!file_exists(CAZUELA_APP_ROOT ."/class/". $request->getClass() .".php")) {
+				throw new CazuelaException("Class file ". $request->getClass() ." not found", 404);
 			}
 			
-			include(CAZUELA_APP_ROOT ."/class/". $className .".php");
+			include(CAZUELA_APP_ROOT ."/class/". $request->getClass() .".php");
 			
-			if (!class_exists($request->getClass())) {
-				throw new CazuelaException("Class ". $className ." doesn't exist", 404);
+			try {
+				$obj = new ReflectionClass($request->getClass());
+			} catch (ReflectionException $e) {
+				throw new CazuelaException("Class ". $request->getMethod() ." doesn't exist", 404);
+			}
+			
+			if ($obj->hasMethod($request->getMethod()) === false) {
+				throw new CazuelaException("Method ". $request->getMethod() ." doesn't exist", 404);
+			}
+			
+			$rMethod = new ReflectionMethod($request->getClass(), $request->getMethod());
+			if ($rMethod->isProtected() === true) {
+				// Forbidden access to protected methods!
+				throw new CazuelaException("Method ". $request->getMethod() ." doesn't exist", 404);
+			}
+			
+			$parameterCount = 0;
+			foreach ($rMethod->getParameters() as $parameter) {
+				if ($parameter->isOptional() === false) {
+					$parameterCount++;
+				}
+			}
+			
+			if (sizeof($request->getParams()) < $parameterCount) {
+				throw new CazuelaException("Wrong number of parameters", 404);
 			}
 			
 			$className = $request->getClass();
-			$obj = new $className();
-			
-			if (!method_exists($obj, $methodName)) {
-				throw new CazuelaException("Method ". $methodName ." doesn't exist", 404);
-			}
-			
-			$data = call_user_func_array(array($obj, $methodName), $request->getParams());
+			$data = $rMethod->invokeArgs(new $className, $request->getParams());
 			$response->setData($data);
-		
+			
 		} catch (CazuelaException $e) {
 			$response->setMessage($e->getMessage());
 			$response->setCode($e->getCode());
@@ -54,13 +66,12 @@ class Dispatcher {
 		}
 		
 		if ($response->error()) {
-			$output = array("code" => $response->getCode(), "message" => $response->getMessage());
+			$info = array("code" => $response->getCode(), "message" => $response->getMessage());
 		} else {
-			$output = array("data" => $response->getData());
+			$info = array("data" => $response->getData());
 		}
 		
-		header("Content-Type: ".$response->getContentType());
-		echo $response->getResponse($output);
+		$response->setResponse($info);
 	}
 }
 ?>

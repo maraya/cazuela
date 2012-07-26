@@ -7,15 +7,17 @@
 	}
 	
 	if (!defined('CAZUELA_APP_ROOT')) {
-		define('CAZUELA_APP_ROOT', '/var/www/cazuela/app');
+		define('CAZUELA_APP_ROOT', '../../app');
 	}
 
 	require(CAZUELA_BASE . "/lib/core/Bootstrap.php");	
 		
 	$dispatcher = new Dispatcher();
-	$dispatcher->dispatch(
-		new CazuelaRequest(),
-		new CazuelaResponse(array('charset' => Configure::read('encoding')))
-	);
+	$request = new CazuelaRequest();
+	$response = new CazuelaResponse(array('charset' => Configure::read('encoding')));
+	$dispatcher->dispatch($request, $response);
+	
+	header("Content-Type: ".$response->getContentType());
+	echo $response->getOutput();
 	
 ?>

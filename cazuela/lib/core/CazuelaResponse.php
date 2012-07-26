@@ -7,6 +7,7 @@ class CazuelaResponse {
 	private $error;
 	private $contentType;
 	private $charset;
+	private $response;
 	
 	public function __construct($options = array()) {
 		if (isset($options['charset'])) {
@@ -74,7 +75,17 @@ class CazuelaResponse {
 		return $this->charset;
 	}
 	
-	public function getResponse($output) {
+	public function setResponse($response) {
+		$this->response = $response;
+	}
+	
+	public function getResponse() {
+		return $this->response;
+	}
+	
+	public function getOutput() {
+		$output = $this->getResponse();
+	
 		if (Configure::read('debug') == 1) {
 			$output['debug'] = CazuelaDebug::get();
 		}

@@ -1,9 +1,9 @@
 <?php
 
 class Test extends AppBase {
-	public $useDBConn = false;
+	public $useDBConn = true;
 
-	public function getTest($action, $action2) {
+	public function getTest($action, $test = null) {
 	
 		//print_r ($action);
 		//print_r ($action2);
