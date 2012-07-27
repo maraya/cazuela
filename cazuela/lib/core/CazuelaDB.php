@@ -1,7 +1,23 @@
 <?php
+
+/** 
+ * Database Layer, extends PDO
+ * @author maraya
+ * Version: 0.1 (26 July 2012)
+ */
+
 class CazuelaDB extends PDO {
+	/**
+	 * Holds the data source name string
+	 * @var string
+	 */
 	private $dsn;
-			
+	
+	/**
+	 * CazuelaDB Constructor
+	 * @param array $dbinfo - Holds the database configuration
+	 * @throws CazuelaException
+	 */
 	public function __construct($dbinfo) {
 		$port = null;
 		$schm = null;
@@ -35,6 +51,13 @@ class CazuelaDB extends PDO {
 		}
 	}
 	
+	/**
+	 * Method to query a SQL statement, returns an array object that contains the data
+	 * Use only for SELECT statements
+	 * @param string $sql
+	 * @throws CazuelaException
+	 * @return array
+	 */
 	public function query($sql) {
 		$data = array();
 		$stmt = $this->prepare($sql);
@@ -49,11 +72,18 @@ class CazuelaDB extends PDO {
 		return $data;
 	}
 
+	/**
+	 * Method to query a SQL statement, returns true on success or false on failure
+	 * Use only for INSERT, UPDATE, DELETE statements
+	 * @param string $sql
+	 * @throws CazuelaException
+	 * @return array
+	 */
 	public function execute($sql) {
 		$stmt = $this->prepare($sql);
 		$exec = $stmt->execute();
 		
-		if (!$exec) {
+		if ($exec === false) {
 			$err = $this->errorInfo();
 			throw new CazuelaException($err[2], 400);
 		}

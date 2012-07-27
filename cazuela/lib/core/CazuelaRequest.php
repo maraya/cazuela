@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CazuelaRequest: A class to handle the client request
+ * A class to handle the client request
  * It should be instanciated only by the Dispatcher
  * @author maraya
  *

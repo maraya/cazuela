@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CazuelaResponse: A class to handle the client response
+ * A class to handle the client response
  * It should be instanciated only by the Dispatcher
  * @author maraya
  *
@@ -211,11 +211,11 @@ class CazuelaResponse {
 		}
 		
 		if ($this->type == "json") {
-			$output = JSON::get($output);
+			$output = JSON::encode($output);
 		} else if ($this->type == "xml") {
-			$output = XML::get($output, $this->getCharset());
+			$output = XML::encode($output, $this->getCharset());
 		} else { // default
-			$output = JSON::get($output);
+			$output = JSON::encode($output);
 		}
 		
 		return $output;

@@ -1,22 +1,42 @@
 <?php
 
+/** 
+ * Class to manage the database requests
+ * @author maraya
+ * Version: 0.1 (26 July 2012)
+ */
+
 class CazuelaBase {
-	private static $instance;
-	private $db;
+	/**
+	 * Holds the CazuelaDB instance
+	 * @var CazuelaDB
+	 */
+	protected $db;
+	
+	/**
+	 * Flag to define if the class uses a database connection
+	 * @var boolean
+	 */
 	public $useDBConn = true;
 
+	
+	/**
+	 * CazuelaBase Construct
+	 */
 	public function __construct() {
 		if ($this->useDBConn == true) {
 			$this->db = new CazuelaDB(Configure::read('dbinfo'));	
 		}
-		self::$instance = $this;
-	}
-
-	protected static function getInstance() {
-		return self::$instance;
 	}
 	
-	protected function query ($sql) {
+	/**
+	 * Method to query a SQL statement, returns an array object that contains the data
+	 * Use only for SELECT statements
+	 * @param string $sql
+	 * @throws CazuelaException
+	 * @return array
+	 */
+	protected function query($sql) {
 		if ($this->useDBConn == false) {
 			throw new CazuelaException("DBConn set to false", 500);
 		}
@@ -29,9 +49,20 @@ class CazuelaBase {
 		return $res;
 	}
 	
+	/**
+	 * Method to query a SQL statement, returns true on success or false on failure
+	 * Use only for INSERT, UPDATE, DELETE statements
+	 * @param string $sql
+	 * @throws CazuelaException
+	 * @return array
+	 */
 	protected function execute($sql) {
 		if ($this->useDBConn == false) {
 			throw new CazuelaException("DBConn set to false", 500);
+		}
+		
+		if (Configure::read('debug') == 1) {
+			CazuelaDebug::append("query", $sql);
 		}
 		
 		$res = $this->db->query($sql);
