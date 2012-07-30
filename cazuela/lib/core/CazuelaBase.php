@@ -18,14 +18,25 @@ class CazuelaBase {
 	 * @var boolean
 	 */
 	public $useDBConn = true;
-
 	
+	/**
+	 * Name of the datasource, by default "default"
+	 * @var string
+	 */
+	public $dataSource = 'default';
+
 	/**
 	 * CazuelaBase Construct
 	 */
 	public function __construct() {
 		if ($this->useDBConn == true) {
-			$this->db = new CazuelaDB(Configure::read('dbinfo'));	
+			$dataSources = Configure::read('dataSources');
+			
+			if (array_key_exists($this->dataSource, $dataSources) === false) {
+				throw new CazuelaException("Unknown datasource ". $this->dataSource);
+			}
+			
+			$this->db = new CazuelaDB($dataSources[$this->dataSource]);	
 		}
 	}
 	

@@ -10,7 +10,7 @@
 class Dispatcher {
 
 	/**
-	 * Routing method
+	 * Dispatcher/router method
 	 * @param CazuelaRequest $request
 	 * @param CazuelaResponse $response
 	 * @throws CazuelaException

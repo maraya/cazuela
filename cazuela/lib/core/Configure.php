@@ -8,17 +8,33 @@
 
 class Configure {
 	/**
-	 * Enter description here ...
+	 * Hold the items array
 	 * @var array
 	 */
 	private static $items;
 	
+	/**
+	 * Write conf value
+	 * @param string $name
+	 * @param string $value
+	 */
 	public static function write($name, $value) {
 		self::$items[$name] = $value;
 	}
 	
+	/**
+	 * Gets conf value, null if key does not exists
+	 * @param string $name
+	 * @return string
+	 */
 	public static function read($name) {
-		if (!array_key_exists($name, self::$items)) {
+		/*
+		if (is_null(self::$items)) {
+			return null;	
+		}
+		*/
+		
+		if (array_key_exists($name, self::$items) === false) {
 			return null;
 		}
 		
