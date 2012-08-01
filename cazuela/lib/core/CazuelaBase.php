@@ -24,19 +24,25 @@ class CazuelaBase {
 	 * @var string
 	 */
 	public $dataSource = 'default';
+	
+	/**
+	 * Holds the array of datasources
+	 * @var array
+	 */
+	public $dataSources = array();
 
 	/**
 	 * CazuelaBase Construct
 	 */
 	public function __construct() {
 		if ($this->useDBConn == true) {
-			$dataSources = Configure::read('dataSources');
+			$this->dataSources = Configure::read('dataSources');
 			
-			if (array_key_exists($this->dataSource, $dataSources) === false) {
+			if (array_key_exists($this->dataSource, $this->dataSources) === false) {
 				throw new CazuelaException("Unknown datasource ". $this->dataSource);
 			}
 			
-			$this->db = new CazuelaDB($dataSources[$this->dataSource]);	
+			$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);	
 		}
 	}
 	
@@ -78,6 +84,20 @@ class CazuelaBase {
 		
 		$res = $this->db->query($sql);
 		return $res;
+	}
+	
+	/**
+	 * Sets the datasource
+	 * @param string $dataSource
+	 * @throws CazuelaException
+	 */
+	protected function setDataSource($dataSource) {
+		if (array_key_exists($dataSource, $this->dataSources) === false) {
+			throw new CazuelaException("Unknown datasource ". $dataSource);
+		}
+		
+		$this->dataSource = $dataSource;
+		$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);	
 	}
 }
 

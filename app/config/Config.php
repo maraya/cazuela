@@ -13,22 +13,22 @@
 
 $dataSources = array(
 	'default' => array(
+		'dbdriver' => 'pdo-pgsql',
+		'dbhost'   => 'localhost',
+		'dbport'   => '',
+		'dbuser'   => 'maraya',
+		'dbpass'   => 'maraya',
+		'dbname'   => 'fungibles_devel',
+		'dbschm'   => '',
+		'dbopts'   => array()
+	),
+	'test' => array(
 		'dbdriver' => 'pdo-mysql',
 		'dbhost'   => 'localhost',
 		'dbport'   => '',
 		'dbuser'   => 'root',
 		'dbpass'   => '',
-		'dbname'   => '',
-		'dbschm'   => '',
-		'dbopts'   => array()
-	),
-	'test' => array(
-		'dbdriver' => '',
-		'dbhost'   => '',
-		'dbport'   => '',
-		'dbuser'   => '',
-		'dbpass'   => '',
-		'dbname'   => '',
+		'dbname'   => 'mysql',
 		'dbschm'   => '',
 		'dbopts'   => array()
 	)

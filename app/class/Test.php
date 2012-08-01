@@ -2,19 +2,16 @@
 
 class Test extends AppBase {
 	public $useDBConn = true;
-	//public $dataSource = 'default';
+	public $dataSource = 'default';
 
 	public function getTest($action, $test = null) {
 	
-		//print_r ($action);
-		//print_r ($action2);
+		$res1 = $this->query("select now() as now");
 	
-		//$res = $this->query("select now() as now");
-		//return array('message' => 'Hello World!', 'now' => $res[0]['now']);
-
-		//return array('message' => 'Hello World!');
+		$this->setDataSource('test');
 		
-		return "Hello World!";
+		$res2 = $this->query("select now() as now");
+		return array('message' => 'Hello World!', 'now-mysql' => $res1[0]['now'], "now-postgres" => $res2[0]['now']);
 	}
 }
 
