@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * Test class
+ * @author maraya
+ *
+ */
+
 class Test extends AppBase {
 	public $useDBConn = true;
-	public $dataSource = 'default';
+	//public $dataSource = 'default';
 
 	public function getTest($action, $test = null) {
 	
@@ -11,7 +17,7 @@ class Test extends AppBase {
 		$this->setDataSource('test');
 		
 		$res2 = $this->query("select now() as now");
-		return array('message' => 'Hello World!', 'now-mysql' => $res1[0]['now'], "now-postgres" => $res2[0]['now']);
+		return array('message' => 'Hello World!', 'now-postgres' => $res1[0]['now'], "now-mysql" => $res2[0]['now']);
 	}
 }
 

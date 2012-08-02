@@ -42,7 +42,7 @@ class CazuelaBase {
 				throw new CazuelaException("Unknown datasource ". $this->dataSource);
 			}
 			
-			$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);	
+			$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);
 		}
 	}
 	

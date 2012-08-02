@@ -16,7 +16,7 @@ class CazuelaDebug {
 	/**
 	 * Append to debug array list
 	 * @param string $key
-	 * @param strng $value
+	 * @param string $value
 	 */
 	public static function append($key, $value) {
 		self::$log[] = array($key => $value);
