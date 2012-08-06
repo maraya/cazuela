@@ -3,7 +3,21 @@
 /** 
  * Application configuration
  * @author maraya
- * Version: 0.1 (26 July 2012)
+ * 
+ * This file is part of Cazuela.
+ *
+ * Cazuela is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Cazuela is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Cazuela. If not, see <http://www.gnu.org/licenses/>.
  */
 	
 /**
@@ -46,14 +60,4 @@ $debug = 1;
  */
 $encoding = 'UTF-8';
 
-	/*
-	//$dbinfo = 
-	Configure::write('dbinfo', $dbinfo);
-	Configure::write('encoding', 'UTF-8');
-	
-	//sets the debug level
-	// 0: none
-	// 1 debug
-	Configure::write('debug', 1);
-	*/
 ?>
