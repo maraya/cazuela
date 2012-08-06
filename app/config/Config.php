@@ -13,7 +13,7 @@
 
 $dataSources = array(
 	'default' => array(
-		'dbdriver' => 'pdo-pgsql',
+		'dbdriver' => 'pgsql',
 		'dbhost'   => 'localhost',
 		'dbport'   => '',
 		'dbuser'   => 'maraya',
@@ -23,7 +23,7 @@ $dataSources = array(
 		'dbopts'   => array()
 	),
 	'test' => array(
-		'dbdriver' => 'pdo-mysql',
+		'dbdriver' => 'mysql',
 		'dbhost'   => 'localhost',
 		'dbport'   => '',
 		'dbuser'   => 'root',

@@ -22,9 +22,9 @@ class CazuelaDB extends PDO {
 		$port = null;
 		$schm = null;
 				
-		if ($dbinfo['dbdriver'] == "pdo-mysql") {
+		if ($dbinfo['dbdriver'] == "mysql") {
 			$driver = "mysql";
-		} else if ($dbinfo['dbdriver'] == "pdo-pgsql") {
+		} else if ($dbinfo['dbdriver'] == "pgsql") {
 			$driver = "pgsql";
 		} else {
 			throw new CazuelaException($dbinfo['dbdriver']." database driver doesn't exist", 500);
