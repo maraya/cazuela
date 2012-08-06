@@ -28,12 +28,6 @@ class Configure {
 	 * @return string
 	 */
 	public static function read($name) {
-		/*
-		if (is_null(self::$items)) {
-			return null;	
-		}
-		*/
-		
 		if (array_key_exists($name, self::$items) === false) {
 			return null;
 		}

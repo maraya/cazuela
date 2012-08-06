@@ -31,10 +31,15 @@ class Dispatcher {
 			$request->setParams($params);
 			$response->setContentType($response->getType());
 			
-			if (!in_array($response->getType(), array("json", "xml"))) {
+			if (!in_array($response->getType(), array("json", "xml", "yml"))) {
 				throw new CazuelaException("Type ". $response->getType() . " is invalid", 400);
 			}
-						
+			
+			if ($response->getType() == "yml" && function_exists("yaml_emit") == false) {
+				$response->setType("json");
+				throw new CazuelaException("YAML is not installed. Please verify your PHP instalation", 500);
+			}
+			
 			if (!file_exists(CAZUELA_APP_ROOT ."/class/". $request->getClass() .".php")) {
 				throw new CazuelaException("Class file ". $request->getClass() ." not found", 404);
 			}

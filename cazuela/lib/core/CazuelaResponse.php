@@ -10,7 +10,7 @@
 
 class CazuelaResponse {
 	/**
-	 * Holds the type/format name (json/xml)
+	 * Holds the type/format name (json/xml/yml)
 	 * @var type
 	 */
 	private $type;
@@ -69,7 +69,7 @@ class CazuelaResponse {
 	
 	/**
 	 * Sets the type/format name
-	 * @param string $type - sets the type/format name (json/xml)
+	 * @param string $type - sets the type/format name (json/xml/yml)
 	 */
 	public function setType($type) {
 		$this->type = trim($type);
@@ -156,6 +156,8 @@ class CazuelaResponse {
 			$this->contentType =  "application/json";
 		} else if ($type == "xml") {
 			$this->contentType = "application/xml";
+		} else if ($type == "yml") {
+			$this->contentType = "text/x-yaml";
 		}
 	}
 	
@@ -200,7 +202,7 @@ class CazuelaResponse {
 	}
 	
 	/**
-	 * Gets the output JSON/XML
+	 * Gets the output JSON/XML/YAML
 	 * @return string
 	 */
 	public function getOutput() {
@@ -214,6 +216,8 @@ class CazuelaResponse {
 			$output = JSON::encode($output);
 		} else if ($this->type == "xml") {
 			$output = XML::encode($output, $this->getCharset());
+		} else if ($this->type == "yml") {
+			$output = YAML::encode($output);
 		} else { // default
 			$output = JSON::encode($output);
 		}

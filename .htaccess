@@ -1,4 +1,4 @@
 <IfModule mod_rewrite.c>
    RewriteEngine on
-   RewriteRule ^(.*)\/(.*)\.(json|xml)$ app/webroot/index.php?__class=$1&__method=$2&__type=$3 [QSA,L]
+   RewriteRule ^(.*)\/(.*)\.(json|xml|yml)$ app/webroot/index.php?__class=$1&__method=$2&__type=$3 [QSA,L]
 </IfModule>
