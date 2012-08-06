@@ -58,11 +58,23 @@ class CazuelaBase {
 			throw new CazuelaException("DBConn set to false", 500);
 		}
 		
+		$time_start = microtime(true);
+		$res = $this->db->query($sql);
+		$time_end = microtime(true);
+		$time = $time_end - $time_start;
+		
 		if (Configure::read('debug') == 1) {
-			CazuelaDebug::append("query", $sql);
+			$info = array();
+			
+			if ($this->useDBConn == true) {
+				$info['datasource'] = $this->dataSource;
+			}
+			
+			$info['statement'] = $sql;
+			$info['time'] = $time;
+			CazuelaDebug::append("query", $info);
 		}
 		
-		$res = $this->db->query($sql);
 		return $res;
 	}
 	
@@ -78,11 +90,23 @@ class CazuelaBase {
 			throw new CazuelaException("DBConn set to false", 500);
 		}
 		
+		$time_start = microtime(true);
+		$res = $this->db->query($sql);
+		$time_end = microtime(true);
+		$time = $time_end - $time_start;
+		
 		if (Configure::read('debug') == 1) {
-			CazuelaDebug::append("query", $sql);
+			$info = array();
+			
+			if ($this->useDBConn == true) {
+				$info['datasource'] = $this->dataSource;
+			}
+			
+			$info['statement'] = $sql;
+			$info['time'] = $time;
+			CazuelaDebug::append("query", $info);
 		}
 		
-		$res = $this->db->query($sql);
 		return $res;
 	}
 	

@@ -209,7 +209,7 @@ class CazuelaResponse {
 		$output = $this->getResponse();
 	
 		if (Configure::read('debug') == 1) {
-			$output['debug'] = CazuelaDebug::get();	
+			$output['debug'] = CazuelaDebug::get();
 		}
 		
 		if ($this->type == "json") {

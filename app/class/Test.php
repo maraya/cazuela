@@ -3,14 +3,13 @@
 /**
  * Test class
  * @author maraya
- *
  */
 
 class Test extends AppBase {
 	public $useDBConn = true;
 	//public $dataSource = 'default';
 
-	public function getTest($action, $test = null) {
+	public function getTest() {
 	
 		$res1 = $this->query("select now() as now");
 	
