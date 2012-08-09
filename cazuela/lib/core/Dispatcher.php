@@ -53,16 +53,16 @@ class Dispatcher {
 				throw new CazuelaException("YAML is not installed. Please verify your PHP instalation", 500);
 			}
 			
-			if (!file_exists(CAZUELA_APP_ROOT ."/class/". $request->getClass() .".php")) {
-				throw new CazuelaException("Class file ". $request->getClass() ." not found", 404);
+			if (!file_exists(CAZUELA_APP_ROOT ."/services/". $request->getClass() .".php")) {
+				throw new CazuelaException("Service file ". $request->getClass() ." not found", 404);
 			}
 			
-			include(CAZUELA_APP_ROOT ."/class/". $request->getClass() .".php");
+			include(CAZUELA_APP_ROOT ."/services/". $request->getClass() .".php");
 			
 			try {
 				$obj = new ReflectionClass($request->getClass());
 			} catch (ReflectionException $e) {
-				throw new CazuelaException("Class ". $request->getMethod() ." doesn't exist", 404);
+				throw new CazuelaException("Class ". $request->getClass() ." doesn't exist", 404);
 			}
 			
 			if ($obj->hasMethod($request->getMethod()) === false) {
