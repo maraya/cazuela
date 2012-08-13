@@ -21,7 +21,7 @@
  */
 	
 /**
- * Sets the datasources for the applicaction
+ * Sets the datasources for the application
  * @var array
  */
 
@@ -30,9 +30,9 @@ $dataSources = array(
 		'dbdriver' => 'pgsql',
 		'dbhost'   => 'localhost',
 		'dbport'   => '',
-		'dbuser'   => 'maraya',
-		'dbpass'   => 'maraya',
-		'dbname'   => 'fungibles_devel',
+		'dbuser'   => 'postgres',
+		'dbpass'   => 'postgres',
+		'dbname'   => 'postgres',
 		'dbschm'   => '',
 		'dbopts'   => array()
 	),
@@ -41,7 +41,7 @@ $dataSources = array(
 		'dbhost'   => 'localhost',
 		'dbport'   => '',
 		'dbuser'   => 'root',
-		'dbpass'   => '321321',
+		'dbpass'   => 'root',
 		'dbname'   => 'mysql',
 		'dbschm'   => '',
 		'dbopts'   => array()

@@ -6,15 +6,21 @@ It can be used to interconnect systems, such as middleware platform, such as API
 
 ## Supported Databases
 
-For now only MySQL and PostgreSQL
+For now only MySQL and PostgreSQL databases.
 
-## How to use?
+## How to use? (Wiki is still under construction)
 
-See the example in the app /services/Test.php (Wiki is still under construction).
+1- Change the connection settings in /app/config/Config.php
 
-Then in your favorite browser:
+2- See the example service in the app/services/Test.php
 
-http://domain/Test/getTest.(xml/json/yml)
+3- Then in your favorite browser: http://domain/Test/getTest.(xml/json/yml)
 
-## Timeline
+4- if you pretend to serve multiple apps with one Cazuela installation, please change (for each app) the CAZUELA_BASE constant in app/webroot/index.php 
 
+## TODO (in next version!)
+
+- Console interface to cook a Cazuela
+- ORM support
+- SOAP and XMLRPC support (on study!)
+- Oracle and SQLite database support
