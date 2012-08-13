@@ -53,7 +53,7 @@ class CazuelaBase {
 			$this->dataSources = Configure::read('dataSources');
 			
 			if (array_key_exists($this->dataSource, $this->dataSources) === false) {
-				throw new CazuelaException("Unknown datasource ". $this->dataSource);
+				throw new CazuelaException("Unknown datasource ". $this->dataSource, 1000);
 			}
 			
 			$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);
@@ -69,7 +69,7 @@ class CazuelaBase {
 	 */
 	protected function query($sql) {
 		if ($this->useDBConn == false) {
-			throw new CazuelaException("DBConn set to false", 500);
+			throw new CazuelaException("DBConn set to false", 1001);
 		}
 		
 		$time_start = microtime(true);
@@ -101,7 +101,7 @@ class CazuelaBase {
 	 */
 	protected function execute($sql) {
 		if ($this->useDBConn == false) {
-			throw new CazuelaException("DBConn set to false", 500);
+			throw new CazuelaException("DBConn set to false", 1001);
 		}
 		
 		$time_start = microtime(true);
@@ -131,7 +131,7 @@ class CazuelaBase {
 	 */
 	protected function setDataSource($dataSource) {
 		if (array_key_exists($dataSource, $this->dataSources) === false) {
-			throw new CazuelaException("Unknown datasource ". $dataSource);
+			throw new CazuelaException("Unknown datasource ". $dataSource, 1000);
 		}
 		
 		$this->dataSource = $dataSource;

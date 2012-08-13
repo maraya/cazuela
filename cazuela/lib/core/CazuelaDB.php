@@ -41,7 +41,7 @@ class CazuelaDB extends PDO {
 		} else if ($dbinfo['dbdriver'] == "pgsql") {
 			$driver = "pgsql";
 		} else {
-			throw new CazuelaException($dbinfo['dbdriver']." database driver doesn't exist", 500);
+			throw new CazuelaException($dbinfo['dbdriver']." database driver doesn't exist", 1002);
 		}
 		
 		if (trim($dbinfo['dbport']) != "") {
@@ -61,7 +61,7 @@ class CazuelaDB extends PDO {
 		try {
 			parent::__construct($this->dsn, $dbinfo['dbuser'], $dbinfo['dbpass'], $dbinfo['dbopts']);
 		} catch (PDOException $e) {
-			throw new CazuelaException("PDO Error: ". $e->getMessage(), 500);
+			throw new CazuelaException("PDO Error: ". $e->getMessage(), 1003);
 		}
 	}
 	
@@ -79,7 +79,7 @@ class CazuelaDB extends PDO {
 		
 		if (!$stmt->execute()) {
 			$err = $this->errorInfo();
-			throw new CazuelaException($err[2], 400);
+			throw new CazuelaException($err[2], 1004);
 		}
 		
 		$data = $stmt->fetchAll();
@@ -99,7 +99,7 @@ class CazuelaDB extends PDO {
 		
 		if ($exec === false) {
 			$err = $this->errorInfo();
-			throw new CazuelaException($err[2], 400);
+			throw new CazuelaException($err[2], 1005);
 		}
 		return $exec;
 	}

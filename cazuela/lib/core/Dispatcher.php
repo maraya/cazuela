@@ -45,17 +45,17 @@ class Dispatcher {
 			$response->setContentType($response->getType());
 			
 			if (!in_array($response->getType(), array("json", "xml", "yml"))) {
-				throw new CazuelaException("Type ". $response->getType() . " is invalid", 400);
+				throw new CazuelaException("Type ". $response->getType() . " is invalid", 2000);
 			}
 			
 			if ($response->getType() == "yml" && function_exists("yaml_emit") == false) {
 				$response->setType("json");
 				$response->setContentType("json");
-				throw new CazuelaException("YAML is not installed. Please verify your PHP instalation", 500);
+				throw new CazuelaException("YAML is not installed. Please verify your PHP instalation", 2001);
 			}
 			
 			if (!file_exists(CAZUELA_APP_ROOT ."/services/". $request->getClass() .".php")) {
-				throw new CazuelaException("Service file ". $request->getClass() ." not found", 404);
+				throw new CazuelaException("Service file ". $request->getClass() ." not found", 2002);
 			}
 			
 			include(CAZUELA_APP_ROOT ."/services/". $request->getClass() .".php");
@@ -63,17 +63,17 @@ class Dispatcher {
 			try {
 				$obj = new ReflectionClass($request->getClass());
 			} catch (ReflectionException $e) {
-				throw new CazuelaException("Class ". $request->getClass() ." doesn't exist", 404);
+				throw new CazuelaException("Class ". $request->getClass() ." doesn't exist", 2003);
 			}
 			
 			if ($obj->hasMethod($request->getMethod()) === false) {
-				throw new CazuelaException("Method ". $request->getMethod() ." doesn't exist", 404);
+				throw new CazuelaException("Method ". $request->getMethod() ." doesn't exist", 2004);
 			}
 			
 			$rMethod = new ReflectionMethod($request->getClass(), $request->getMethod());
 			if ($rMethod->isProtected() === true) {
 				// Forbidden access to protected methods!
-				throw new CazuelaException("Method ". $request->getMethod() ." doesn't exist", 404);
+				throw new CazuelaException("Method ". $request->getMethod() ." doesn't exist", 2004);
 			}
 			
 			$parameterCount = 0;
@@ -84,7 +84,7 @@ class Dispatcher {
 			}
 			
 			if (sizeof($request->getParams()) < $parameterCount) {
-				throw new CazuelaException("Wrong number of parameters", 404);
+				throw new CazuelaException("Wrong number of parameters", 2005);
 			}
 			
 			$className = $request->getClass();
