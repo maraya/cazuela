@@ -37,7 +37,7 @@ class Dispatcher {
 			$params = array();
 			foreach($_REQUEST as $parameter => $value) {
 				if (stripos($parameter, '__') === false) {
-					$params[$parameter] = $value;
+					$params[$parameter] = htmlentities(trim($value));
 				}
 			}
 			
@@ -50,6 +50,7 @@ class Dispatcher {
 			
 			if ($response->getType() == "yml" && function_exists("yaml_emit") == false) {
 				$response->setType("json");
+				$response->setContentType("json");
 				throw new CazuelaException("YAML is not installed. Please verify your PHP instalation", 500);
 			}
 			
