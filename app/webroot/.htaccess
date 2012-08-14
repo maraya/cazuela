@@ -1,0 +1,4 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine on
+   RewriteRule ^(.*)\/(.*)\.(json|xml|yml)$ index.php?__class=$1&__method=$2&__type=$3 [QSA,L]
+</IfModule>
