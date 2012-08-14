@@ -25,6 +25,10 @@ For now only MySQL and PostgreSQL databases.
 
 4- If you pretend to serve multiple apps with one Cazuela installation, please change (for each app) the CAZUELA_BASE constant in app/webroot/index.php 
 
+## Troubleshooting
+
+Please refer to the [ErrorCode Wiki](https://github.com/maraya/cazuela/wiki/ErrorCodes)
+
 ## TODO (in next version!)
 
 - Console interface to cook a Cazuela
