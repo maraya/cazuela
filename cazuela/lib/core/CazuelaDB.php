@@ -69,15 +69,18 @@ class CazuelaDB extends PDO {
 	 * Method to query a SQL statement, returns an array object that contains the data
 	 * Use only for SELECT statements
 	 * @param string $sql
+	 * @param array $params
 	 * @throws CazuelaException
 	 * @return array
 	 */
-	public function query($sql) {
+	public function query($sql, $params = array()) {
 		$data = array();
+		
 		$stmt = $this->prepare($sql);
 		$stmt->setFetchMode(parent::FETCH_ASSOC);
+		$exec = $stmt->execute($params);
 		
-		if (!$stmt->execute()) {
+		if ($exec === false) {
 			$err = $this->errorInfo();
 			throw new CazuelaException($err[2], 1004);
 		}
@@ -90,12 +93,13 @@ class CazuelaDB extends PDO {
 	 * Method to query a SQL statement, returns true on success or false on failure
 	 * Use only for INSERT, UPDATE, DELETE statements
 	 * @param string $sql
+	 * @param array $params
 	 * @throws CazuelaException
 	 * @return array
 	 */
-	public function execute($sql) {
+	public function execute($sql, $params = array()) {
 		$stmt = $this->prepare($sql);
-		$exec = $stmt->execute();
+		$exec = $stmt->execute($params);
 		
 		if ($exec === false) {
 			$err = $this->errorInfo();

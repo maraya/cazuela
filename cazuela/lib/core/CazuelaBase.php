@@ -64,16 +64,17 @@ class CazuelaBase {
 	 * Method to query a SQL statement, returns an array object that contains the data
 	 * Use only for SELECT statements
 	 * @param string $sql
+	 * @params array @params
 	 * @throws CazuelaException
 	 * @return array
 	 */
-	protected function query($sql) {
+	protected function query($sql, $params = array()) {
 		if ($this->useDBConn == false) {
-			throw new CazuelaException("DBConn set to false", 1001);
+			throw new CazuelaException("useDBConn set to false", 1001);
 		}
 		
 		$time_start = microtime(true);
-		$res = $this->db->query($sql);
+		$res = $this->db->query($sql, $params);
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
 		
@@ -96,16 +97,17 @@ class CazuelaBase {
 	 * Method to query a SQL statement, returns true on success or false on failure
 	 * Use only for INSERT, UPDATE, DELETE statements
 	 * @param string $sql
+	 * @params array @params
 	 * @throws CazuelaException
 	 * @return array
 	 */
-	protected function execute($sql) {
+	protected function execute($sql, $params = array()) {
 		if ($this->useDBConn == false) {
-			throw new CazuelaException("DBConn set to false", 1001);
+			throw new CazuelaException("useDBConn set to false", 1001);
 		}
 		
 		$time_start = microtime(true);
-		$res = $this->db->query($sql);
+		$res = $this->db->query($sql, $params);
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
 		
