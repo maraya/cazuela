@@ -13,7 +13,7 @@
  *
  * Cazuela is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -21,6 +21,7 @@
  */
 
 require(CAZUELA_BASE . "/lib/core/Configure.php");
+require(CAZUELA_BASE . "/lib/core/CazuelaSanitize.php");
 require(CAZUELA_BASE . "/lib/core/CazuelaDB.php");
 require(CAZUELA_BASE . "/lib/core/CazuelaBase.php");
 require(CAZUELA_BASE . "/lib/core/AppBase.php");
