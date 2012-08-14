@@ -27,7 +27,7 @@ For now only MySQL and PostgreSQL databases.
 
 ## Troubleshooting
 
-Please refer to the [ErrorCode Wiki](https://github.com/maraya/cazuela/wiki/ErrorCodes)
+Please refer to https://github.com/maraya/cazuela/wiki/ErrorCodes
 
 ## TODO (in next version!)
 
@@ -38,4 +38,4 @@ Please refer to the [ErrorCode Wiki](https://github.com/maraya/cazuela/wiki/Erro
 
 ## Timeline
 
-0.1 - Inicial version
+0.1 - Initial version
