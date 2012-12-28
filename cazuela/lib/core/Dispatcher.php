@@ -54,26 +54,34 @@ class Dispatcher {
 				throw new CazuelaException("YAML is not installed. Please verify your PHP instalation", 2001);
 			}
 			
-			if (!file_exists(CAZUELA_APP_ROOT ."/services/". $request->getClass() .".php")) {
-				throw new CazuelaException("Service file ". $request->getClass() ." not found", 2002);
+			$className = $request->getClass()."Service";
+			$methodName = $request->getMethod();
+			
+			$privateMethods = array("beforeCall", "afterCall");
+			if (in_array($methodName, $privateMethods)) {
+				throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
 			}
 			
-			include(CAZUELA_APP_ROOT ."/services/". $request->getClass() .".php");
+			if (!file_exists(CAZUELA_APP_ROOT ."/services/". $className .".php")) {
+				throw new CazuelaException("Service file ". $className ." not found", 2002);
+			}
+			
+			include(CAZUELA_APP_ROOT ."/services/". $className .".php");
 			
 			try {
-				$obj = new ReflectionClass($request->getClass());
+				$obj = new ReflectionClass($className);
 			} catch (ReflectionException $e) {
-				throw new CazuelaException("Class ". $request->getClass() ." doesn't exist", 2003);
+				throw new CazuelaException("Class ". $className ." doesn't exist", 2003);
 			}
 			
-			if ($obj->hasMethod($request->getMethod()) === false) {
-				throw new CazuelaException("Method ". $request->getMethod() ." doesn't exist", 2004);
+			if ($obj->hasMethod($methodName) === false) {
+				throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
 			}
 			
-			$rMethod = new ReflectionMethod($request->getClass(), $request->getMethod());
+			$rMethod = new ReflectionMethod($className, $methodName);
 			if ($rMethod->isProtected() === true) {
 				// Forbidden access to protected methods!
-				throw new CazuelaException("Method ". $request->getMethod() ." doesn't exist", 2004);
+				throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
 			}
 			
 			$parameterCount = 0;
@@ -87,9 +95,16 @@ class Dispatcher {
 				throw new CazuelaException("Wrong number of parameters", 2005);
 			}
 			
-			$className = $request->getClass();
+			// beforeCall method
+			$bc = new ReflectionMethod($className, "beforeCall");
+			$bc->invoke(new $className);
+			
 			$data = $rMethod->invokeArgs(new $className, $request->getParams());
 			$response->setData($data);
+			
+			// afterCall method
+			$ac = new ReflectionMethod($className, "afterCall");
+			$ac->invoke(new $className);
 			
 		} catch (CazuelaException $e) {
 			$response->setMessage($e->getMessage());

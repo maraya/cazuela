@@ -23,8 +23,14 @@
 require(CAZUELA_BASE . "/lib/core/Configure.php");
 require(CAZUELA_BASE . "/lib/core/CazuelaSanitize.php");
 require(CAZUELA_BASE . "/lib/core/CazuelaDB.php");
-require(CAZUELA_BASE . "/lib/core/CazuelaBase.php");
-require(CAZUELA_BASE . "/lib/core/AppBase.php");
+require(CAZUELA_BASE . "/lib/core/CazuelaService.php");
+
+if (file_exists(CAZUELA_APP_ROOT . "/services/ServiceBase.php")) {
+	require(CAZUELA_APP_ROOT . "/services/ServiceBase.php");
+} else {
+	require(CAZUELA_BASE . "/lib/core/ServiceBase.php");	
+}
+
 require(CAZUELA_BASE . "/lib/core/CazuelaException.php");	
 require(CAZUELA_BASE . "/lib/core/Dispatcher.php");
 require(CAZUELA_BASE . "/lib/core/CazuelaRequest.php");

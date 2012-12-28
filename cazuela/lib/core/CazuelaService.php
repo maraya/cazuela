@@ -20,7 +20,7 @@
  * along with Cazuela. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class CazuelaBase {
+class CazuelaService {
 	/**
 	 * Holds the CazuelaDB instance
 	 * @var CazuelaDB
@@ -138,6 +138,18 @@ class CazuelaBase {
 		
 		$this->dataSource = $dataSource;
 		$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);	
+	}
+	
+	/**
+	 * beforeCall method (for overriding)
+	 */
+	public function beforeCall() {
+	}
+	
+	/**
+	 * afterCall method (for overriding)
+	 */
+	public function afterCall() {
 	}
 }
 

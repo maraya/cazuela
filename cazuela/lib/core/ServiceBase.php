@@ -20,8 +20,8 @@
  * along with Cazuela. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class AppBase extends CazuelaBase {
-	
+class ServiceBase extends CazuelaService {
+
 }
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Test class
+ * Bridge class to CazuelaBase, can be overridden on the application
  * @author maraya
  * 
  * This file is part of Cazuela.
@@ -20,18 +20,12 @@
  * along with Cazuela. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Test extends AppBase {
-	public $useDBConn = true;
-	//public $dataSource = 'default';
+class ServiceBase extends CazuelaService {
 
-	public function getTest() {
+	public function beforeCall() {
+	}
 	
-		$res1 = $this->query("select now() as now");
-	
-		$this->setDataSource('test');
-		
-		$res2 = $this->query("select now() as now");
-		return array('message' => 'Hello World!', 'now-postgres' => $res1[0]['now'], "now-mysql" => $res2[0]['now']);
+	public function afterCall() {
 	}
 }
 

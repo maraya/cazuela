@@ -1,7 +1,7 @@
 <?php
 
-/** 
- * Application configuration
+/**
+ * Test class
  * @author maraya
  * 
  * This file is part of Cazuela.
@@ -19,45 +19,20 @@
  * You should have received a copy of the GNU General Public License
  * along with Cazuela. If not, see <http://www.gnu.org/licenses/>.
  */
+
+class TestService extends ServiceBase {
+	public $useDBConn = true;
+	//public $dataSource = 'default';
+
+	public function getTest() {
 	
-/**
- * Sets the datasources for the application
- * @var array
- */
-
-$dataSources = array(
-	'default' => array(
-		'dbdriver' => 'pgsql',
-		'dbhost'   => 'localhost',
-		'dbport'   => '',
-		'dbuser'   => 'maraya',
-		'dbpass'   => 'maraya',
-		'dbname'   => 'postgres',
-		'dbschm'   => '',
-		'dbopts'   => array()
-	),
-	'test' => array(
-		'dbdriver' => 'mysql',
-		'dbhost'   => 'localhost',
-		'dbport'   => '',
-		'dbuser'   => 'root',
-		'dbpass'   => 'root',
-		'dbname'   => 'mysql',
-		'dbschm'   => '',
-		'dbopts'   => array()
-	)
-);
-
-/**
- * Sets the debug level
- *  @var integer
- */
-$debug = 1;
-
-/**
- * Sets the encoding
- * @var string
- */
-$encoding = 'UTF-8';
+		$res1 = $this->query("select now() as now");
+	
+		//$this->setDataSource('test');
+		
+		$res2 = $this->query("select now() as now");
+		return array('message' => 'Hello World!', 'now-postgres' => $res1[0]['now']);
+	}
+}
 
 ?>
