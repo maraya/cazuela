@@ -67,7 +67,6 @@ class CazuelaRequest {
 	 * @param array $params - array of params (name/value)
 	 */
 	public function setParams($params) {
-		ksort($params);		
 		$this->params = $params;
 	}
 	
