@@ -55,7 +55,7 @@ $dataSources = array(
 $debug = 1;
 
 /**
- * Sets ethe encoding
+ * Sets the encoding
  * @var string
  */
 $encoding = 'UTF-8';

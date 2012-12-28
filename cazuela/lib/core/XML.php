@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * XML class to encode strings
