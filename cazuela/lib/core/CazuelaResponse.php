@@ -228,7 +228,8 @@ class CazuelaResponse {
 		if ($this->type == "json") {
 			$output = JSON::encode($output);
 		} else if ($this->type == "xml") {
-			$output = XML::encode($output, $this->getCharset());
+			$xml = new XML($this->getCharset());
+			$output = $xml->encode($output);
 		} else if ($this->type == "yml") {
 			$output = YAML::encode($output);
 		} else { // default

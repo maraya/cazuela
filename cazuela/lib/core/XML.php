@@ -21,18 +21,39 @@
  */
 
 class XML {
+	/**
+	 * Holds the SimpleXMLElement object
+	 * @var object
+	 */
+	private $xml;
+	
+	/**
+	 * XML construct
+	 * @param string $charset
+	 */
+	public function __construct($charset) {
+		$this->xml = new SimpleXMLElement('<root/>');
+	}
+	
+	private function createXML($input) {
+		foreach ($input as $key => $val) {
+			//echo $key."=>".$val;
+			
+			if (is_array($val)) {
+				$this->xml->addChild($key, $this->createXML($input));
+			}	
+		}
+		return $this->xml;
+	}
 	
 	/**
 	 * Transforms array to XML format
 	 * @param array $input
-	 * @param string $charset
 	 * @return string
 	 */
-	public static function encode($input, $charset) {
-		Array2XML::init('1.0', $charset);
-		$xml = Array2XML::createXML('root', $input);
-		
-		return $xml->saveXML();
+	public function encode($input) {
+		$this->createXML($input);
+		return $this->xml->asXML();
 	}
 }
 ?>

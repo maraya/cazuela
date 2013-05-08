@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Array2XML: A class to convert array in PHP to XML
  * It also takes into account attributes names unlike SimpleXML in PHP
@@ -85,9 +86,14 @@ class Array2XML {
                 }
                 unset($arr['@attributes']); //remove the key from the array once done.
             }
- 
+			
             // check if it has a value stored in @value, if yes store the value and return
             // else check if its directly stored as string
+			
+			echo "<pre>";
+			print_r($arr['@value']);
+			echo "</pre>";
+			
             if(isset($arr['@value'])) {
                 $node->appendChild($xml->createTextNode(self::bool2str($arr['@value'])));
                 unset($arr['@value']);    //remove the key from the array once done.
