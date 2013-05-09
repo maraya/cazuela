@@ -27,12 +27,12 @@
 
 $dataSources = array(
 	'default' => array(
-		'dbdriver' => 'pgsql',
+		'dbdriver' => 'mysql',
 		'dbhost'   => 'localhost',
 		'dbport'   => '',
-		'dbuser'   => 'maraya',
-		'dbpass'   => 'maraya',
-		'dbname'   => 'postgres',
+		'dbuser'   => 'root',
+		'dbpass'   => 'root',
+		'dbname'   => 'mysql',
 		'dbschm'   => '',
 		'dbopts'   => array()
 	),
