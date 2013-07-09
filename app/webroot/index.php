@@ -48,7 +48,7 @@ $request = new CazuelaRequest();
 $response = new CazuelaResponse(array('charset' => Configure::read('encoding')));
 $dispatcher->dispatch($request, $response);
 
-header("Content-Type: ".$response->getContentType());
+//header("Content-Type: ".$response->getContentType());
 echo $response->getOutput();
 	
 ?>

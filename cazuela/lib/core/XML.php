@@ -22,68 +22,37 @@
 
 class XML {
 	/**
-	 * Holds the XML string
-	 * @var string
+	 * Holds the DOMDocument object
+	 * @var DOMDocument
 	 */
-	private static $xml;
+	private static $dom;
 	
-	/**
-	 * Checks if a variable is an associative array
-	 * @param array $arr
-	 * @return void
-	 */
-	private static function isAssoc($arr) {
-		if (!is_array($arr)) return true;
-		return array_keys($arr) !== range(0, count($arr) - 1);
-	}
-	
-	/**
-	 * Gets the XML type for a native type
-	 * @param mixed $val
-	 * @return string
-	 */
-	private static function getXMLType($val) {
-		$type = null;
-		if (is_string($val)) {
-			$type = "<![CDATA[".$val."]]>";
-		} elseif (is_bool($val)) {
-			$val = ($val === true)? 'true': 'false';
-			$type = $val;
-		} else {
-			$type = $val;
-		}
-		return $type;
-	}
-	
-	/**
-	 * Creates XML body
-	 * @param array $input
-	 * @return void
-	 */
-	private static function createXMLBody($input) {
+	private static function createXMLBody($input, $elem) {
 		
-		foreach ($input as $key => $val) {		
-			if (!self::isAssoc($val)) {
-				
-				foreach ($val as $arr) {
-					self::$xml .= "<".$key.">";
-					foreach ($arr as $key2 => $val2) {
-						self::$xml .= "<".$key2.">".self::getXMLType($val2)."</".$key2.">";
-					}
-					self::$xml .= "</".$key.">";
-				}
-			} else {
-				self::$xml .= "<".$key.">";
-			
-				if (is_array($val)) {
-					self::$xml .= self::createXMLBody($val);
+		foreach ($input as $key => $val) {
+		
+			if (is_array($val)) {
+				if (is_numeric($key)) {
+					$nval = array();
+					$nval[$elem->tagName] = $val;
+					self::createXMLBody($val, $elem->parentNode);
 				} else {
-					self::$xml .= self::getXMLType($val);
-				}
 			
-				self::$xml .= "</".$key.">";
-			}	
-		}			
+					$child = self::$dom->createElement($key);
+					$elem->appendChild($child);
+					self::createXMLBody($val, $child);
+					
+					
+				}
+				
+			} elseif (is_string($val)) {
+			
+				$child = self::$dom->createElement($key);
+				$elem->appendChild($child);
+				$text = self::$dom->createCDATASection($val);
+				$child->appendChild($text);
+			}
+		}
 	}
 	
 	/**
@@ -93,16 +62,34 @@ class XML {
 	 * @return string
 	 */
 	public static function encode($input, $charset) {
-		
+	
+		/*
 		$input = array(
 			array('val1' => 1),
 			array('val2' => 2)
 		);
+		*/
+		
+		
+		self::$dom = new DOMDocument('1.0', $charset);
+		$root = self::$dom->createElement('root');
+		self::$dom->appendChild($root);
+		
+		self::createXMLBody($input, $root);
+		
+		
+		return self::$dom->saveXML();
+		
+		//echo self::$dom->saveXML();
+		
+		
+		/*
 		self::$xml = "<?xml version=\"1.0\" encoding=\"".$charset."\"?><root>";
 		self::createXMLBody($input);		
 		self::$xml .= "</root>";
+		*/
 		
-		return self::$xml;
+		//return self::$xml;
 	}
 }
 ?>
