@@ -20,26 +20,25 @@
  * along with Cazuela. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require(CAZUELA_BASE . "/lib/core/Configure.php");
-require(CAZUELA_BASE . "/lib/core/CazuelaSanitize.php");
-require(CAZUELA_BASE . "/lib/core/CazuelaDB.php");
-require(CAZUELA_BASE . "/lib/core/CazuelaService.php");
+require(CAZUELA_BASE . "/core/Configure.php");
+require(CAZUELA_BASE . "/core/CazuelaSanitize.php");
+require(CAZUELA_BASE . "/core/CazuelaDB.php");
+require(CAZUELA_BASE . "/core/CazuelaService.php");
 
 if (file_exists(CAZUELA_APP_ROOT . "/services/ServiceBase.php")) {
 	require(CAZUELA_APP_ROOT . "/services/ServiceBase.php");
 } else {
-	require(CAZUELA_BASE . "/lib/core/ServiceBase.php");	
+	require(CAZUELA_BASE . "/core/ServiceBase.php");	
 }
 
-require(CAZUELA_BASE . "/lib/core/CazuelaException.php");	
-require(CAZUELA_BASE . "/lib/core/Dispatcher.php");
-require(CAZUELA_BASE . "/lib/core/CazuelaRequest.php");
-require(CAZUELA_BASE . "/lib/core/JSON.php");
-//require(CAZUELA_BASE . "/lib/contrib/Array2XML.php");
-require(CAZUELA_BASE . "/lib/core/XML.php");
-require(CAZUELA_BASE . "/lib/core/YAML.php");
-require(CAZUELA_BASE . "/lib/core/CazuelaResponse.php");
-require(CAZUELA_BASE . "/lib/core/CazuelaDebug.php");	
+require(CAZUELA_BASE . "/core/CazuelaException.php");	
+require(CAZUELA_BASE . "/core/Dispatcher.php");
+require(CAZUELA_BASE . "/core/CazuelaRequest.php");
+require(CAZUELA_BASE . "/core/JSON.php");
+require(CAZUELA_BASE . "/core/XML.php");
+require(CAZUELA_BASE . "/core/YAML.php");
+require(CAZUELA_BASE . "/core/CazuelaResponse.php");
+require(CAZUELA_BASE . "/core/CazuelaDebug.php");	
 
 /**
  * Write configuration vars

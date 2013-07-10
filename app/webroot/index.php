@@ -24,7 +24,7 @@
  * If Cazuela is in a different path, please change the CAZUELA_BASE constant
  */
 if (!defined('CAZUELA_BASE')) {
-	define('CAZUELA_BASE', dirname(dirname(dirname(__FILE__))) . '/cazuela');
+	define('CAZUELA_BASE', dirname(dirname(dirname(__FILE__))) . '/lib');
 }
 
 /**
@@ -35,7 +35,7 @@ if (!defined('CAZUELA_APP_ROOT')) {
 }
 
 require(CAZUELA_APP_ROOT . "/config/Config.php");
-require(CAZUELA_BASE . "/lib/core/Bootstrap.php");	
+require(CAZUELA_BASE . "/core/Bootstrap.php");	
 
 if (Configure::read('debug') === 1) {
 	error_reporting(E_ALL | E_STRICT);

@@ -52,6 +52,11 @@ class Dispatcher {
 				$response->setType("json");
 				$response->setContentType("json");
 				throw new CazuelaException("YAML is not installed. Please verify your PHP instalation", 2001);
+				
+			} elseif ($response->getType() == "xml" && class_exists("DOMDocument") == false) {
+				$response->setType("json");
+				$response->setContentType("json");
+				throw new CazuelaException("DOMDocument class not found. Please verify your PHP instalation", 2001);
 			}
 			
 			$className = $request->getClass()."Service";

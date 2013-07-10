@@ -6,9 +6,10 @@ It can be used to interconnect systems, such as middleware platform, such as API
 
 ## Requirements
 
-- Apache 2.x
+- Apache 2.x or Nginx 1.x
 - Rewrite mod (mod_rewrite)
-- PHP 5.3.x (with PDO, Reflection support)
+- PHP > 5.3.x (with PDO, Reflection support)
+- PHP DOMDocument (for XML parsing) 
 - YAML module for PHP (if you pretend YAML support) 
 
 ## Supported Databases
@@ -29,14 +30,20 @@ For now only MySQL and PostgreSQL databases.
 
 Please refer to https://github.com/maraya/cazuela/wiki/ErrorCodes
 
-## TODO (in next version!)
+## TODO
 
 - Console interface to cook a Cazuela
 - ORM support
-- SOAP and XMLRPC support (on study!)
+- Cache support
 - Oracle and SQLite database support
 
 ## Timeline
+
+0.2.1 - Bugfixes
+
+- New class for data parsing (uses DOMDocument)
+- CDATA on string type vars
+- New directory hierarchy
 
 0.2 - Bugfixes
 
