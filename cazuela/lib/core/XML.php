@@ -27,30 +27,54 @@ class XML {
 	 */
 	private static $dom;
 	
+	/**
+	 * Creates the XML body
+	 * @param array $input
+	 * @param DOMElement $elem
+	 * @return void
+	 */
 	private static function createXMLBody($input, $elem) {
+	
+		//print_r($input);
+	
+		$numKeys = array_filter(array_keys($input), function($k) {
+			return is_int($k);
+		});
 		
-		foreach ($input as $key => $val) {
-		
-			if (is_array($val)) {
-				if (is_numeric($key)) {
-					$nval = array();
-					$nval[$elem->tagName] = $val;
-					self::createXMLBody($val, $elem->parentNode);
-				} else {
-			
+		if (sizeof($numKeys) == sizeof($input)) {
+			foreach ($input as $val) {
+				$child = self::$dom->createElement($elem->tagName, $val);
+				$elem->appendChild($child);
+			}
+		} else {	
+			foreach ($input as $key => $val) {
+				if (is_array($val)) {
+					$numKeys = array_filter(array_keys($val), function($k) {
+						return is_int($k);
+					});
+					
+					if (sizeof($numKeys) > 0) {
+						foreach ($numKeys as $index) {
+							$child = self::$dom->createElement($key);
+							self::createXMLBody($input[$key][$index], $child);
+							$elem->appendChild($child);
+						}
+						
+					} else {
+						$child = self::$dom->createElement($key);
+						self::createXMLBody($val, $child);
+						$elem->appendChild($child);
+					}
+				
+				} elseif (is_string($val)) {
 					$child = self::$dom->createElement($key);
 					$elem->appendChild($child);
-					self::createXMLBody($val, $child);
-					
-					
+					$text = self::$dom->createCDATASection($val);
+					$child->appendChild($text);
+				} else {
+					$child = self::$dom->createElement($key, $val);
+					$elem->appendChild($child);
 				}
-				
-			} elseif (is_string($val)) {
-			
-				$child = self::$dom->createElement($key);
-				$elem->appendChild($child);
-				$text = self::$dom->createCDATASection($val);
-				$child->appendChild($text);
 			}
 		}
 	}
@@ -62,34 +86,16 @@ class XML {
 	 * @return string
 	 */
 	public static function encode($input, $charset) {
-	
-		/*
-		$input = array(
-			array('val1' => 1),
-			array('val2' => 2)
-		);
-		*/
+		
+		//$input = array(1, 2, 3, 4, 5, 6);
 		
 		
 		self::$dom = new DOMDocument('1.0', $charset);
 		$root = self::$dom->createElement('root');
-		self::$dom->appendChild($root);
-		
+		self::$dom->appendChild($root);		
 		self::createXMLBody($input, $root);
 		
-		
 		return self::$dom->saveXML();
-		
-		//echo self::$dom->saveXML();
-		
-		
-		/*
-		self::$xml = "<?xml version=\"1.0\" encoding=\"".$charset."\"?><root>";
-		self::createXMLBody($input);		
-		self::$xml .= "</root>";
-		*/
-		
-		//return self::$xml;
 	}
 }
 ?>
