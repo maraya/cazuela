@@ -45,7 +45,7 @@ if (Configure::read('debug') === 1) {
 		
 $dispatcher = new Dispatcher();
 $request = new CazuelaRequest();
-$response = new CazuelaResponse(array('charset' => Configure::read('encoding')));
+$response = new CazuelaResponse(array('charset' => Configure::read('encoding')), $request);
 $dispatcher->dispatch($request, $response);
 
 header("Content-Type: ".$response->getContentType());

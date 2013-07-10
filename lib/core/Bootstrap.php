@@ -21,6 +21,19 @@
  */
 
 require(CAZUELA_BASE . "/core/Configure.php");
+
+/**
+ * Write configuration vars
+ */
+Configure::write('dataSources', $dataSources);
+Configure::write('encoding', $encoding);
+Configure::write('debug', $debug);	
+Configure::write('cache', $cache);
+
+/**
+ * Core required
+ */
+
 require(CAZUELA_BASE . "/core/CazuelaSanitize.php");
 require(CAZUELA_BASE . "/core/CazuelaDB.php");
 require(CAZUELA_BASE . "/core/CazuelaService.php");
@@ -37,14 +50,8 @@ require(CAZUELA_BASE . "/core/CazuelaRequest.php");
 require(CAZUELA_BASE . "/core/JSON.php");
 require(CAZUELA_BASE . "/core/XML.php");
 require(CAZUELA_BASE . "/core/YAML.php");
+require(CAZUELA_BASE . "/core/cache/CazuelaCache.php");
 require(CAZUELA_BASE . "/core/CazuelaResponse.php");
 require(CAZUELA_BASE . "/core/CazuelaDebug.php");	
-
-/**
- * Write configuration vars
- */
-Configure::write('dataSources', $dataSources);
-Configure::write('encoding', $encoding);
-Configure::write('debug', $debug);	
 	
 ?>

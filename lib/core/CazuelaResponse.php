@@ -71,13 +71,20 @@ class CazuelaResponse {
 	private $response;
 	
 	/**
+	 * Holds the CazuelaRequest object
+	 * @var request
+	 */
+	private $request;
+	
+	/**
 	 * Construct
 	 * @param array $options - array options
 	 */
-	public function __construct($options = array()) {
+	public function __construct($options = array(), CazuelaRequest $request) {
 		if (isset($options['charset'])) {
 			$this->charset = $options['charset'];
 		}
+		$this->request = $request;
 	}
 	
 	/**

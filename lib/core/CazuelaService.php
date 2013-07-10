@@ -73,10 +73,28 @@ class CazuelaService {
 			throw new CazuelaException("useDBConn set to false", 1001);
 		}
 		
-		$time_start = microtime(true);
-		$res = $this->db->query($sql, $params);
-		$time_end = microtime(true);
-		$time = $time_end - $time_start;
+		// cache
+		if (Configure::read('cache') == true) {
+			$hash = sha1($this->dataSource . $sql);
+			
+			if (CazuelaCache::check($hash)) {
+			
+				$res = $this->db->query($sql, $params);
+				$time = 'cached...';
+			} else {
+			
+				$time_start = microtime(true);
+				$res = $this->db->query($sql, $params);
+				$time_end = microtime(true);
+				$time = $time_end - $time_start;
+			}
+		} else {
+			$time_start = microtime(true);
+			$res = $this->db->query($sql, $params);
+			$time_end = microtime(true);
+			$time = $time_end - $time_start;
+		}
+		
 		
 		if (Configure::read('debug') == 1) {
 			$info = array();

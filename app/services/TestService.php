@@ -31,7 +31,8 @@ class TestService extends ServiceBase {
 		//$this->setDataSource('test');
 		
 		$res2 = $this->query("select now() as now");
-		return array('message' => 'Hello World!', 'now-postgres' => $res1[0]['now']);
+		return array('message' => 'Hello World!', 'now-postgres' => $res1[0]['now'], 'numeric' => 1);
+		//return array('message' => 'Hello World!', 'now-postgres' => $res1[0]['now']);
 	}
 }
 

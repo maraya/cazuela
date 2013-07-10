@@ -28,11 +28,11 @@
 $dataSources = array(
 	'default' => array(
 		'dbdriver' => 'mysql',
-		'dbhost'   => 'localhost',
+		'dbhost'   => '192.168.10.19',
 		'dbport'   => '',
-		'dbuser'   => 'root',
-		'dbpass'   => 'root',
-		'dbname'   => 'mysql',
+		'dbuser'   => 'framework',
+		'dbpass'   => 'Tv4L4sEmZQce7Ww2',
+		'dbname'   => 'eclass_33',
 		'dbschm'   => '',
 		'dbopts'   => array()
 	),
@@ -47,6 +47,26 @@ $dataSources = array(
 		'dbopts'   => array()
 	)
 );
+
+/**
+ * Cache enabled/disabled
+ * @var array
+ */
+$cache = true;
+ 
+/**
+ * Cache enabled/disabled
+ * @var array
+ */ 
+ 
+$time = 1800;
+
+$engine = array(
+	'host' => 'localhost',
+	'port' => 11211
+);
+ 
+ 
 
 /**
  * Sets the debug level
