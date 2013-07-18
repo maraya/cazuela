@@ -92,6 +92,7 @@ class CazuelaService {
 			
 			if (!empty($cacheRes)) {
 				$res = $cacheRes;
+				$time_end = microtime(true);
 			} else {
 				$res = $this->db->query($sql, $params);
 				CazuelaCache::write($hash, $res);
@@ -102,7 +103,8 @@ class CazuelaService {
 			$time_end = microtime(true);
 		}
 		
-		$time = (isset($cacheRes) && !empty($cacheRes))? 'cached...' : ($time_end - $time_start);
+		$access = (!empty($cacheRes))? 'cache': 'sql';
+		$time = $time_end - $time_start;
 		
 		if (Configure::read('debug') == 1) {
 			$info = array();
@@ -112,6 +114,7 @@ class CazuelaService {
 			}
 			
 			$info['statement'] = $sql;
+			$info['access'] = $access;
 			$info['time'] = $time;
 			CazuelaDebug::append("query", $info);
 		}
