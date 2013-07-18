@@ -52,7 +52,7 @@ $dataSources = array(
  * Cache enabled/disabled
  * @var array
  */
-$cacheEnabled = true;
+$cacheEnabled = false;
  
 /**
  * Cache settings
