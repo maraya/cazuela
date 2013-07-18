@@ -44,6 +44,12 @@ class CazuelaService {
 	 * @var array
 	 */
 	public $dataSources = array();
+	
+	/**
+	 * CazuelaCache instance
+	 * @var CazuelaCache
+	 */
+	public $cache = array();
 
 	/**
 	 * CazuelaBase Construct
@@ -58,13 +64,17 @@ class CazuelaService {
 			
 			$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);
 		}
+		
+		if (Configure::read('cacheEnabled') == true) {
+			$this->cache = new CazuelaCache();
+		}
 	}
 	
 	/**
 	 * Method to query a SQL statement, returns an array object that contains the data
 	 * Use only for SELECT statements
 	 * @param string $sql
-	 * @params array @params
+	 * @params array $params
 	 * @throws CazuelaException
 	 * @return array
 	 */
@@ -74,27 +84,25 @@ class CazuelaService {
 		}
 		
 		// cache
-		if (Configure::read('cache') == true) {
+		$time_start = microtime(true);
+		
+		if (Configure::read('cacheEnabled') == true) {
 			$hash = sha1($this->dataSource . $sql);
+			$cacheRes = CazuelaCache::read($hash);
 			
-			if (CazuelaCache::check($hash)) {
-			
-				$res = $this->db->query($sql, $params);
-				$time = 'cached...';
+			if (!empty($cacheRes)) {
+				$res = $cacheRes;
 			} else {
-			
-				$time_start = microtime(true);
 				$res = $this->db->query($sql, $params);
+				CazuelaCache::write($hash, $res);
 				$time_end = microtime(true);
-				$time = $time_end - $time_start;
 			}
 		} else {
-			$time_start = microtime(true);
 			$res = $this->db->query($sql, $params);
 			$time_end = microtime(true);
-			$time = $time_end - $time_start;
 		}
 		
+		$time = (isset($cacheRes) && !empty($cacheRes))? 'cached...' : ($time_end - $time_start);
 		
 		if (Configure::read('debug') == 1) {
 			$info = array();

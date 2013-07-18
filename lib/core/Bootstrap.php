@@ -27,8 +27,9 @@ require(CAZUELA_BASE . "/core/Configure.php");
  */
 Configure::write('dataSources', $dataSources);
 Configure::write('encoding', $encoding);
-Configure::write('debug', $debug);	
-Configure::write('cache', $cache);
+Configure::write('debug', $debug);
+Configure::write('cacheEnabled', $cacheEnabled);
+Configure::write('cacheEngine', $cacheEngine);
 
 /**
  * Core required
