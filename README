@@ -1,6 +1,6 @@
 ## What is Cazuela?
 
-Cazuela is a lightweight RESTful Framework written in PHP that allows you to export data to common formats such as JSON/XML/YAML. PDO used as data layer.
+Cazuela is a lightweight SOA Framework written in PHP that allows you to export data to common formats such as JSON/XML/YAML. PDO used as data layer.
 
 It can be used to interconnect systems, such as middleware platform, such as API layer or whatever you can think of!
 
