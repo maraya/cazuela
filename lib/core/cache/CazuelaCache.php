@@ -49,14 +49,19 @@ class CazuelaCache {
 			if ($this->cacheEngine['engine'] === 'memcache') {
 				if (!class_exists("Memcache")) {
 					throw new CazuelaException("Memcache class not found. Please verify your PHP instalation", 2001);
-				}
-				
+				}				
 				$this->conn = new Memcache();
 				$this->conn->connect($this->cacheEngine['host'], $this->cacheEngine['port']);
-				self::$instance = $this;
+				
+			} elseif ($this->cacheEngine['engine'] === 'apc') {
+				if (!function_exists("apc_add")) {
+					throw new CazuelaException("APC extension not found. Please verify your PHP instalation", 2001);
+				}				
 			} else {
-				throw new CazuelaException("Unsupported cache engine \"".$this->cacheEngine['engine']."\"");
+				throw new CazuelaException("Unsupported cache engine \"".$this->cacheEngine['engine']."\"", 3000);
 			}
+			
+			self::$instance = $this;
 		} else {
 			return self::$instance;
 		}
@@ -85,8 +90,16 @@ class CazuelaCache {
 			throw new CazuelaException("Cache engine disabled by app configuration");
 		}
 		
-		if (self::getInstance()->cacheEngine['engine'] === 'memcache') {
+		if (isset(self::getInstance()->cacheEngine['prefix'])) {
+			$hash = self::getInstance()->cacheEngine['prefix'] . $hash;
+		}
+		
+		$engine = self::getInstance()->cacheEngine['engine'];
+		
+		if ($engine === 'memcache') {
 			return self::getInstance()->conn->get($hash);
+		} elseif ($engine === 'apc') {
+			return apc_fetch($hash);
 		}
 		
 		return "";
@@ -103,8 +116,38 @@ class CazuelaCache {
 			throw new CazuelaException("Cache engine disabled by app configuration");
 		}
 		
-		if (self::getInstance()->cacheEngine['engine'] === 'memcache') {
-			self::getInstance()->conn->add($hash, $value, MEMCACHE_COMPRESSED, self::getInstance()->cacheEngine['duration']);
+		if (isset(self::getInstance()->cacheEngine['prefix'])) {
+			$hash = self::getInstance()->cacheEngine['prefix'] . $hash;
+		}
+		
+		$engine = self::getInstance()->cacheEngine['engine'];
+		$duration = self::getInstance()->cacheEngine['duration'];
+		
+		if ($engine === 'memcache') {
+			self::getInstance()->conn->add($hash, $value, MEMCACHE_COMPRESSED, $duration);
+		} elseif ($engine === 'apc') {
+			apc_add($hash, $value, $duration);
+		}
+	}
+	
+	/**
+	 * Delete key from cache engine
+	 * @param string $hash
+	 * @throws CazuelaException
+	 */
+	public static function delete($hash) {
+		if (Configure::read('cacheEnabled') == false) {
+			throw new CazuelaException("Cache engine disabled by app configuration");
+		}
+		
+		if (isset(self::getInstance()->cacheEngine['prefix'])) {
+			$hash = self::getInstance()->cacheEngine['prefix'] . $hash;
+		}
+		
+		if ($engine === 'memcache') {
+			self::getInstance()->conn->delete($hash);
+		} elseif ($engine === 'apc') {
+			apc_delete($hash);
 		}
 	}
 }

@@ -50,6 +50,12 @@ class CazuelaService {
 	 * @var CazuelaCache
 	 */
 	public $cache = array();
+	
+	/**
+	 * CazuelaRequest instance
+	 * @var CazuelaRequest
+	 */
+	public $request;
 
 	/**
 	 * CazuelaBase Construct
@@ -68,6 +74,8 @@ class CazuelaService {
 		if (Configure::read('cacheEnabled') == true) {
 			$this->cache = new CazuelaCache();
 		}
+		
+		$this->request = CazuelaRequest::getInstance();
 	}
 	
 	/**

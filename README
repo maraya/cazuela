@@ -10,7 +10,12 @@ It can be used to interconnect systems, such as middleware platform, such as API
 - Rewrite mod (mod_rewrite)
 - PHP > 5.3.x (with PDO, Reflection support)
 - PHP DOMDocument (for XML parsing) 
-- YAML module for PHP (if you pretend YAML support) 
+- YAML module for PHP (if you pretend YAML support)
+
+## Cache engine requeriments
+
+- Memcache module (http://pecl.php.net/package/memcache)
+- APC module (http://pecl.php.net/package/APC)
 
 ## Supported Databases
 
@@ -34,10 +39,21 @@ Please refer to https://github.com/maraya/cazuela/wiki/ErrorCodes
 
 - Console interface to cook a Cazuela
 - ORM support
-- Cache support
+- Cache support (xcache?, wincache?)
 - Oracle and SQLite database support
 
 ## Timeline
+
+0.3.1 - New features
+
+- APC support
+- delete method in CazuelaCache Class
+- Request object on ServiceBase (for request-type checking)
+- CAZUELA_APP global var (app name)
+
+0.3 - New features
+
+- Memcache support
 
 0.2.1 - Bugfixes
 

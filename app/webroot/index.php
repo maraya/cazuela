@@ -28,6 +28,13 @@ if (!defined('CAZUELA_BASE')) {
 }
 
 /**
+ * Cazuela app name, do not change
+ */
+if (!defined('CAZUELA_APP')) {
+	define('CAZUELA_APP', basename(dirname(dirname(__FILE__)))); 
+}
+
+/**
  * Cazuela app root, do not change
  */
 if (!defined('CAZUELA_APP_ROOT')) {

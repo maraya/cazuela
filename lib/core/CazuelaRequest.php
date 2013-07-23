@@ -47,6 +47,31 @@ class CazuelaRequest {
 	private $params;
 	
 	/**
+	 * CazuelaRequest static instance
+	 * @var CazuelaRequest
+	 */
+	private static $instance = null;
+	
+	/**
+	 * CazuelaRequest construct
+	 */
+	public function __construct() {
+		if (self::$instance == null) {
+			self::$instance = $this;
+		} else {
+			return self::$instance;
+		}
+	}
+	
+	/**
+	 * Gets the CazuelaRequest instance
+	 * @return CazuelaRequest
+	 */
+	public static function getInstance() {
+		return self::$instance;
+	}
+	
+	/**
 	 * Sets the class name
 	 * @param string $class - name of the class
 	 */
@@ -92,6 +117,23 @@ class CazuelaRequest {
 	 */
 	public function getParams() {
 		return $this->params;
+	}
+	
+	/**
+	 * Check the request type
+	 * @param string $type
+	 * @return array
+	 */
+	public function is($type) {
+		$type = strtoupper($type);
+		
+		if (!isset($_SERVER['REQUEST_METHOD'])) {
+			return false;
+		} elseif ($_SERVER['REQUEST_METHOD'] === $type) {
+			return true;
+		}
+		
+		return false;
 	}
 }
 

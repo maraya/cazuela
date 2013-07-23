@@ -25,13 +25,13 @@ class TestService extends ServiceBase {
 	//public $dataSource = 'default';
 
 	public function getTest() {
-	
-		$res1 = $this->query("select now() as now");
-	
-		//$this->setDataSource('test');
-		//$res2 = $this->query("select now() as now");
 		
-		return array('message' => 'Hello World!', 'now-postgres' => $res1[0]['now']);
+		if ($this->request->is('get')) {
+			$res = $this->query("select now() as now");
+			return array('message' => 'Hello World!', 'time' => $res[0]['now']);
+		} else {
+			return 'Forbidden request method!';
+		}
 	}
 }
 

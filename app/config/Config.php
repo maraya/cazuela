@@ -57,13 +57,30 @@ $cacheEnabled = false;
 /**
  * Cache settings
  * @var array
+ *
+ *  APC (http://pecl.php.net/package/APC)
+ *
+ *		$cacheEngine = array(
+ *			'engine'   => 'apc',
+ *			'duration' => 3600,
+ *			'prefix'   => CAZUELA_APP . '_' //[optional]
+ *		);
+ *	
+ *  Memcached (http://www.danga.com/memcache/)
+ *
+ *		$cacheEngine = array(
+ *			'engine'   => 'memcache',
+ *			'host'     => 'localhost',
+ *			'port' 	   => 11211,
+ *			'duration' => 3600,
+ *			'prefix'   => CAZUELA_APP . '_' //[optional]
+ *		);
  */ 
 
 $cacheEngine = array(
-	'engine'   => 'memcache',
-	'host'     => 'localhost',
-	'port' 	   => 11211,
-	'duration' => 3600
+	'engine'   => 'apc',
+	'duration' => 3600,
+	'prefix'   => CAZUELA_APP . '_'
 );
 
 /**
