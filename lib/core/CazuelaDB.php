@@ -32,34 +32,28 @@ class CazuelaDB extends PDO {
 	 * @param array $dbinfo - Holds the database configuration
 	 * @throws CazuelaException
 	 */
-	public function __construct($dbinfo) {
-		$port = null;
-		$schm = null;
-				
+	public function __construct($dbinfo) {		
 		if ($dbinfo['dbdriver'] == "mysql") {
 			$driver = "mysql";
 		} else if ($dbinfo['dbdriver'] == "pgsql") {
 			$driver = "pgsql";
+		} else if ($dbinfo['dbdriver'] == "oracle") {
+			$driver = "oci";
 		} else {
 			throw new CazuelaException($dbinfo['dbdriver']." database driver doesn't exist", 1002);
 		}
 		
-		if (trim($dbinfo['dbport']) != "") {
-			$port = ";port=".$dbinfo['dbport'];
-		} 
+		$port = (trim($dbinfo['dbport']) != "")? (($driver === "oci")? ":".$dbinfo['dbport']: ";port=".$dbinfo['dbport']): null;
+		$dbopts = (!is_array($dbinfo['dbopts']))? array(): $dbinfo['dbopts'];
 		
-		if (trim($dbinfo['dbschm']) != "") {
-			$schm = "";
-		} 
-				
-		if (!is_array($dbinfo['dbopts'])) {
-			$dbinfo['dbopts'] = array();
+		if ($driver === "oci") {
+			$this->dsn = $driver.":dbname=".$dbinfo['dbhost'].$port."/".$dbinfo['dbname'];
+		} else {
+			$this->dsn = $driver.":dbname=".$dbinfo['dbname'].";host=".$dbinfo['dbhost'].$port;
 		}
-				
-		$this->dsn = $driver.":dbname=".$dbinfo['dbname'].";host=".$dbinfo['dbhost'].$port;
-				
+		
 		try {
-			parent::__construct($this->dsn, $dbinfo['dbuser'], $dbinfo['dbpass'], $dbinfo['dbopts']);
+			parent::__construct($this->dsn, $dbinfo['dbuser'], $dbinfo['dbpass'], $dbopts);
 		} catch (PDOException $e) {
 			throw new CazuelaException("PDO Error: ". $e->getMessage(), 1003);
 		}
