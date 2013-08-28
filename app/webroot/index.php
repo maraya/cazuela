@@ -55,6 +55,12 @@ $request = new CazuelaRequest();
 $response = new CazuelaResponse(array('charset' => Configure::read('encoding')), $request);
 $dispatcher->dispatch($request, $response);
 
+if ($response->isAuth()) {
+	header('WWW-Authenticate: Basic realm="My Realm"');
+    header('HTTP/1.0 401 Unauthorized');
+	die;
+}
+
 header("Content-Type: ".$response->getContentType());
 echo $response->getOutput();
 	

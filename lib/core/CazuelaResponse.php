@@ -244,6 +244,12 @@ class CazuelaResponse {
 		
 		return $output;
 	}
+	
+	public function isAuth() {
+		//echo CazuelaService::getInstance()->isAuth();
+	
+		return true;
+	}
 }
 
 ?>

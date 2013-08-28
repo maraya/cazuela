@@ -56,26 +56,48 @@ class CazuelaService {
 	 * @var CazuelaRequest
 	 */
 	public $request;
+	
+	/**
+	 * CazuelaService static instance
+	 * @var CazuelaService
+	 */
+	private static $instance = null;
+	
+	public $auth = false;
 
 	/**
 	 * CazuelaBase Construct
 	 */
 	public function __construct() {
-		if ($this->useDBConn == true) {
-			$this->dataSources = Configure::read('dataSources');
-			
-			if (array_key_exists($this->dataSource, $this->dataSources) === false) {
-				throw new CazuelaException("Unknown datasource ". $this->dataSource, 1000);
+		//if (self::$instance == null) {
+		
+			if ($this->useDBConn == true) {
+				$this->dataSources = Configure::read('dataSources');
+				
+				if (array_key_exists($this->dataSource, $this->dataSources) === false) {
+					throw new CazuelaException("Unknown datasource ". $this->dataSource, 1000);
+				}
+				
+				$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);
 			}
 			
-			$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);
-		}
-		
-		if (Configure::read('cacheEnabled') == true) {
-			$this->cache = new CazuelaCache();
-		}
-		
-		$this->request = CazuelaRequest::getInstance();
+			if (Configure::read('cacheEnabled') == true) {
+				$this->cache = new CazuelaCache();
+			}
+			
+			$this->request = CazuelaRequest::getInstance();
+			self::$instance = $this;
+		//} else {
+			//return self::$instance;
+		//}
+	}
+	
+	/**
+	 * Gets the CazuelaService instance
+	 * @return CazuelaService
+	 */
+	public static function getInstance() {
+		return self::$instance;
 	}
 	
 	/**
@@ -175,6 +197,10 @@ class CazuelaService {
 		
 		$this->dataSource = $dataSource;
 		$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);	
+	}
+	
+	public function isAuth() {
+		return $this->auth;
 	}
 	
 	/**
