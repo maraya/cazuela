@@ -30,6 +30,10 @@ class Dispatcher {
 	 */
 	public function dispatch($request, $response) {
 		try {
+			if (!isset($_REQUEST['__class']) || !isset($_REQUEST['__method']) || !isset($_REQUEST['__type'])) {
+				throw new CazuelaException("Invalid request", 2006);
+			}
+			
 			$request->setClass($_REQUEST['__class']);
 			$request->setMethod($_REQUEST['__method']);
 			$response->setType($_REQUEST['__type']);
@@ -62,7 +66,7 @@ class Dispatcher {
 			$className = $request->getClass()."Service";
 			$methodName = $request->getMethod();
 			
-			$privateMethods = array("beforeCall", "afterCall");
+			$privateMethods = array("beforeCall", "afterCall", "query");
 			if (in_array($methodName, $privateMethods)) {
 				throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
 			}
@@ -73,6 +77,31 @@ class Dispatcher {
 			
 			include(CAZUELA_APP_ROOT ."/services/". $className .".php");
 			
+			if (!class_exists($className)) {
+				throw new CazuelaException("Class ". $className ." doesn't exist", 2003);
+			} 
+			
+			$obj = new $className();
+			
+			if (!method_exists($obj, $methodName)) {
+				throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
+			}
+			
+			// beforeCall method
+			$obj->beforeCall();
+			
+			echo "<pre>";
+			print_r($request->getParams());
+			echo "</pre>";
+			
+			$data = $obj->{$methodName}(compact($request->getParams()));
+			$response->setData($data);
+			
+			// afterCall method
+			$obj->afterCall();
+			
+			
+			/*
 			try {
 				$obj = new ReflectionClass($className);
 			} catch (ReflectionException $e) {
@@ -101,15 +130,16 @@ class Dispatcher {
 			}
 			
 			// beforeCall method
-			$bc = new ReflectionMethod($className, "beforeCall");
-			$bc->invoke(new $className);
+			//$bc = new ReflectionMethod($className, "beforeCall");
+			//$bc->invoke(new $className);
 			
 			$data = $rMethod->invokeArgs(new $className, $request->getParams());
 			$response->setData($data);
 			
 			// afterCall method
-			$ac = new ReflectionMethod($className, "afterCall");
-			$ac->invoke(new $className);
+			//$ac = new ReflectionMethod($className, "afterCall");
+			//$ac->invoke(new $className);
+			*/
 			
 		} catch (CazuelaException $e) {
 			$response->setMessage($e->getMessage());

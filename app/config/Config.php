@@ -27,13 +27,12 @@
 
 $dataSources = array(
 	'default' => array(
-		'dbdriver' => 'mysql',
-		'dbhost'   => 'localhost',
-		'dbport'   => '',
-		'dbuser'   => 'root',
-		'dbpass'   => 'root',
-		'dbname'   => 'mysql',
-		'dbschm'   => '',
+		'dbdriver' => 'oracle',
+		'dbhost'   => '192.168.10.110',
+		'dbport'   => '1521',
+		'dbuser'   => 'maraya',
+		'dbpass'   => 'maraya',
+		'dbname'   => 'test',
 		'dbopts'   => array()
 	),
 	'test' => array(
@@ -43,7 +42,6 @@ $dataSources = array(
 		'dbuser'   => 'root',
 		'dbpass'   => 'root',
 		'dbname'   => 'mysql',
-		'dbschm'   => '',
 		'dbopts'   => array()
 	)
 );
