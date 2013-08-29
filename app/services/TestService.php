@@ -23,16 +23,16 @@
 class TestService extends ServiceBase {
 	public $useDBConn = true;
 	//public $dataSource = 'default';
-	public $auth = array('user', 'password');
+	public $auth = array(
+		'realm' => 'Private Area',
+		'username' => 'test',
+		'password' => 'test'
+	);
 
 	public function getTest() {
 		if ($this->request->is('get')) {
-			$res = $this->query("select to_char(sysdate, 'MM-DD-YYYY HH24:MI:SS') as now from dual");
-			return array('message' => 'Hello World!', 'time' => $res[0]['NOW']);
-			
-			//$res = $this->query("select now() as now");
-			//return "test";
-			
+			$res = $this->query("select now() as now");
+			return array('message' => 'Hello World!', 'time' => $res[0]['now']);
 		} else {
 			return 'Forbidden request method!';
 		}

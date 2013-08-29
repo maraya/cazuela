@@ -90,10 +90,6 @@ class Dispatcher {
 			// beforeCall method
 			$obj->beforeCall();
 			
-			echo "<pre>";
-			print_r($request->getParams());
-			echo "</pre>";
-			
 			$data = $obj->{$methodName}(compact($request->getParams()));
 			$response->setData($data);
 			

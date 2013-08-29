@@ -58,18 +58,22 @@ class CazuelaService {
 	public $request;
 	
 	/**
+	 * Holds the authentication flag
+	 * @var mixed
+	 */
+	public $auth = false;
+	
+	/**
 	 * CazuelaService static instance
 	 * @var CazuelaService
 	 */
 	private static $instance = null;
 	
-	public $auth = false;
-
 	/**
 	 * CazuelaBase Construct
 	 */
 	public function __construct() {
-		//if (self::$instance == null) {
+		if (self::$instance == null) {
 		
 			if ($this->useDBConn == true) {
 				$this->dataSources = Configure::read('dataSources');
@@ -87,9 +91,9 @@ class CazuelaService {
 			
 			$this->request = CazuelaRequest::getInstance();
 			self::$instance = $this;
-		//} else {
-			//return self::$instance;
-		//}
+		} else {
+			return self::$instance;
+		}
 	}
 	
 	/**
@@ -199,7 +203,11 @@ class CazuelaService {
 		$this->db = new CazuelaDB($this->dataSources[$this->dataSource]);	
 	}
 	
-	public function isAuth() {
+	/**
+	 * Returns authentication data
+	 * @return array
+	 */
+	public function getAuth() {
 		return $this->auth;
 	}
 	
