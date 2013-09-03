@@ -83,59 +83,71 @@ class Dispatcher {
 			
 			$obj = new $className();
 			
-			if (!method_exists($obj, $methodName)) {
-				throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
+			// check if service is authenticated
+			if ($obj->isAuth()) {
+				$auth = new CazuelaAuth($obj->getAuth());
+				$auth->auth();
 			}
 			
-			// beforeCall method
-			$obj->beforeCall();
+			if ($obj->isAuth() && !$auth->isAuthorized()) {
+				throw new CazuelaException("401 Unauthorized", 401);	
+			} else {
 			
-			$data = $obj->{$methodName}(compact($request->getParams()));
-			$response->setData($data);
-			
-			// afterCall method
-			$obj->afterCall();
-			
-			
-			/*
-			try {
-				$obj = new ReflectionClass($className);
-			} catch (ReflectionException $e) {
-				throw new CazuelaException("Class ". $className ." doesn't exist", 2003);
-			}
-			
-			if ($obj->hasMethod($methodName) === false) {
-				throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
-			}
-			
-			$rMethod = new ReflectionMethod($className, $methodName);
-			if ($rMethod->isProtected() === true) {
-				// Forbidden access to protected methods!
-				throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
-			}
-			
-			$parameterCount = 0;
-			foreach ($rMethod->getParameters() as $parameter) {
-				if ($parameter->isOptional() === false) {
-					$parameterCount++;
+				if (!method_exists($obj, $methodName)) {
+					throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
 				}
+				
+				// beforeCall method
+				$obj->beforeCall();
+				
+				$data = $obj->{$methodName}(extract($request->getParams()));
+				$response->setData($data);
+				
+				// afterCall method
+				$obj->afterCall();
+				
+				
+				/*
+				try {
+					$obj = new ReflectionClass($className);
+				} catch (ReflectionException $e) {
+					throw new CazuelaException("Class ". $className ." doesn't exist", 2003);
+				}
+				
+				if ($obj->hasMethod($methodName) === false) {
+					throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
+				}
+				
+				$rMethod = new ReflectionMethod($className, $methodName);
+				if ($rMethod->isProtected() === true) {
+					// Forbidden access to protected methods!
+					throw new CazuelaException("Method ". $methodName ." doesn't exist", 2004);
+				}
+				
+				$parameterCount = 0;
+				foreach ($rMethod->getParameters() as $parameter) {
+					if ($parameter->isOptional() === false) {
+						$parameterCount++;
+					}
+				}
+				
+				if (sizeof($request->getParams()) < $parameterCount) {
+					throw new CazuelaException("Wrong number of parameters", 2005);
+				}
+				
+				// beforeCall method
+				//$bc = new ReflectionMethod($className, "beforeCall");
+				//$bc->invoke(new $className);
+				
+				$data = $rMethod->invokeArgs(new $className, $request->getParams());
+				$response->setData($data);
+				
+				// afterCall method
+				//$ac = new ReflectionMethod($className, "afterCall");
+				//$ac->invoke(new $className);
+				*/
+			
 			}
-			
-			if (sizeof($request->getParams()) < $parameterCount) {
-				throw new CazuelaException("Wrong number of parameters", 2005);
-			}
-			
-			// beforeCall method
-			//$bc = new ReflectionMethod($className, "beforeCall");
-			//$bc->invoke(new $className);
-			
-			$data = $rMethod->invokeArgs(new $className, $request->getParams());
-			$response->setData($data);
-			
-			// afterCall method
-			//$ac = new ReflectionMethod($className, "afterCall");
-			//$ac->invoke(new $className);
-			*/
 			
 		} catch (CazuelaException $e) {
 			$response->setMessage($e->getMessage());

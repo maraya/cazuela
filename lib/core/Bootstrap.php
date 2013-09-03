@@ -48,10 +48,11 @@ if (file_exists(CAZUELA_APP_ROOT . "/services/ServiceBase.php")) {
 require(CAZUELA_BASE . "/core/CazuelaException.php");	
 require(CAZUELA_BASE . "/core/Dispatcher.php");
 require(CAZUELA_BASE . "/core/CazuelaRequest.php");
-require(CAZUELA_BASE . "/core/JSON.php");
-require(CAZUELA_BASE . "/core/XML.php");
-require(CAZUELA_BASE . "/core/YAML.php");
+require(CAZUELA_BASE . "/core/output/JSON.php");
+require(CAZUELA_BASE . "/core/output/XML.php");
+require(CAZUELA_BASE . "/core/output/YAML.php");
 require(CAZUELA_BASE . "/core/cache/CazuelaCache.php");
+require(CAZUELA_BASE . "/core/auth/CazuelaAuth.php");
 require(CAZUELA_BASE . "/core/CazuelaResponse.php");
 require(CAZUELA_BASE . "/core/CazuelaDebug.php");	
 	

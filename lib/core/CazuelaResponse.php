@@ -244,57 +244,6 @@ class CazuelaResponse {
 		
 		return $output;
 	}
-	
-	/**
-	 * Checks if the response is authenticated or not
-	 * @return boolean
-	 */
-	public function isAuth() {
-		if (is_array(CazuelaService::getInstance()->getAuth())) {
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * Gets the auth data
-	 * @return mixed
-	 */
-	public function getAuth() {
-		$authData = CazuelaService::getInstance()->getAuth();
-		
-		if (isset($authData['realm']) && isset($authData['username']) && isset($authData['password'])) {
-			return $authData;
-		}
-		return false;
-	}
-	
-	/**
-	 * Auths the response
-	 * @return void
-	 */
-	public function auth() {		
-		$authData = $this->getAuth();
-		if (is_array($authData)) {
-			//header("Cache-Control: no-cache, must-revalidate");
-			if (!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['PHP_AUTH_PW'])) {
-				header("WWW-Authenticate: Basic realm = ".$authData['realm']);
-				header('HTTP/1.0 401 Unauthorized');
-			} else {
-				if ($_SERVER['PHP_AUTH_USER'] != $authData['username'] && $_SERVER['PHP_AUTH_PW'] != $authData['password']) {
-					header('HTTP/1.0 401 Unauthorized');
-					// ????
-					Configure::write('debug', 0);
-					$this->setResponse(array('code' => 401, 'message' => '401 Unauthorized'));
-				} else {
-					echo "entró!";
-				}
-				//unset($_SERVER['PHP_AUTH_USER']);
-				//unset($_SERVER['PHP_AUTH_PW']);
-			}
-			
-		}
-	}
 }
 
 ?>

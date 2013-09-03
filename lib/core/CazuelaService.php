@@ -204,6 +204,17 @@ class CazuelaService {
 	}
 	
 	/**
+	 * Checks if the service is authenticated
+	 * @return boolean
+	 */
+	public function isAuth() {
+		if (is_array($this->getAuth())) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Returns authentication data
 	 * @return array
 	 */

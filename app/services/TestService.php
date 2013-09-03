@@ -24,6 +24,7 @@ class TestService extends ServiceBase {
 	public $useDBConn = true;
 	//public $dataSource = 'default';
 	public $auth = array(
+		'type' => 'basic',
 		'realm' => 'Private Area',
 		'username' => 'test',
 		'password' => 'test'

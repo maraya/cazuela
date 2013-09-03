@@ -55,10 +55,6 @@ $request = new CazuelaRequest();
 $response = new CazuelaResponse(array('charset' => Configure::read('encoding')), $request);
 $dispatcher->dispatch($request, $response);
 
-if ($response->isAuth()) {
-	$response->auth();
-}
-
 header("Content-Type: ".$response->getContentType());
 echo $response->getOutput();
 	
